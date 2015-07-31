@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Preference example</title>
+
+    <script type="text/javascript" src="/apps/2.0/sdk.js"></script>
+
+    <script type="text/javascript">
+        Rally.onReady(function () {
+                Ext.define("CustomApp",{extend:"Rally.app.App",componentCls:"app",launch:function(){var that=this;Rally.data.PreferenceManager.update({appID:this.getAppId(),settings:{myTag:"Spike One"},success:function(updatedRecords,notUpdatedRecords){console.log("updated prefs"),Rally.data.PreferenceManager.load({appID:this.getAppId(),success:function(prefs){this._makeGrid(prefs)},scope:this})},scope:this})},_makeGrid:function(prefs){console.log("prefs",prefs),this.add({xtype:"rallygrid",columnCfgs:["FormattedID","Name","Owner","Tags"],context:this.getContext(),enableEditing:!1,showRowActionsColumn:!1,storeConfig:{model:"userstory",filters:[{property:"Tags.Name",operator:"contains",value:prefs.myTag}]}})}});
+
+            Rally.launchApp('CustomApp', {
+                name:"Preference example",
+	            parentRepos:""
+            });
+
+        });
+    </script>
+
+
+    <style type="text/css">
+        
+    </style>
+</head>
+<body>
+</body>
+</html>
